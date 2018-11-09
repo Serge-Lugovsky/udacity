@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="com.udacity" verbose="1" >
+
+    <test name="loginTest" >
+
+        <classes>
+
+            <class name="com.udacity.tests.LoginTest" />
+
+        </classes>
+    </test>
+    <test name="verifyUserInfoTest">
+        <classes>
+
+            <class name="com.udacity.tests.AccountSettingsTest" />
+
+        </classes>
+    </test>
+
+</suite>

@@ -1,13 +1,13 @@
 package com.udacity.pages;
 
+import com.udacity.tests.TestBase;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.Assert;
 
 
-public class LoginPage extends PageBase {
+public class LoginPage extends TestBase {
 
     @FindBy(xpath = "//input[@type='email']")
     private WebElement emailField;
@@ -19,42 +19,67 @@ public class LoginPage extends PageBase {
     private WebElement signInKey;
 
     @FindBy(xpath = "//a[@title='Logout']")
-    private  WebElement logoutButton;
+    private WebElement logoutButton;
+
+    @FindBy(xpath = "(//*[@title='Sign In'])[2]")
+    private WebElement signInLink;
 
 
-    public LoginPage(WebDriver driver){
-        super(driver);
+    public LoginPage(){
         PageFactory.initElements(driver, this);
-        this.driver = driver;
     }
 
 //==========================|SIGN_IN_ACCOUNT|==========================================
 
+    public void setEmailAddress(String EMAIL){
+        emailField.clear();
+        emailField.sendKeys(EMAIL);
+        System.out.println("ENTRY EMAIL");
+    }
 
-    public AccountSettingsPage signInToAccount (String EMAIL, String PASSWORD){
+    public void setPassword(String PASSWORD){
+        passField.clear();
+        passField.sendKeys(PASSWORD);
+        System.out.println("ENTRY PASSWORD");
+    }
 
-        try{
-            entryTextInInput(emailField, EMAIL);
-            System.out.println("ENTRY EMAIL");
-            entryTextInInput(passField, PASSWORD);
-            System.out.println("ENTRY PASSWORD");
-            click(signInKey);
+    public void signInClick(){
+        signInKey.click();
+        System.out.println("LOGINING...");        
+    }
 
-            wait.until(ExpectedConditions.urlToBe("https://classroom.udacity.com/me"));
-            System.out.println("URL     PASSED");
-            Assert.assertTrue(logoutButton.isDisplayed());
-            System.out.println("SIGN_IN WAS SUCCESSFUL");
-        }catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e){
+    public boolean verifyUserSignIn(){
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
 
+        }catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
 
-            System.out.println("FAILED SIGN_IN!!!!!!!!!!!!!!!!!!!!!!!!");
             System.out.println(e.getMessage());
 
-
         }
-        return new AccountSettingsPage(driver);
-
+        return logoutButton.isDisplayed();
     }
 
 //======================================================================================
+
+
+    public void signOutAccount() {
+            logoutButton.click();
+            System.out.println("SIGN_OUT");
+    }
+
+    public boolean verifyUserSignOut(){
+        try{
+
+            wait.until(ExpectedConditions.visibilityOf(signInLink));
+
+        }catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
+
+            System.out.println(e.getMessage());
+
+        }
+
+        return signInLink.isDisplayed();
+    }
+
 }

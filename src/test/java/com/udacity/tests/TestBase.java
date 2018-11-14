@@ -1,20 +1,44 @@
 package com.udacity.tests;
 
+import com.udacity.pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.*;
-
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeTest;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 
 public class TestBase {
 
-    public WebDriver driver;
+    protected    static WebDriver driver;
+    protected    static Properties prop;
+    protected    static WebDriverWait wait;
 
-    @BeforeClass
-    public void setup(){
+
+    protected TestBase(){
+        try {
+            prop = new Properties();
+            FileInputStream ip = new FileInputStream(System.getProperty("user.dir")+ "/src/main/resources/test_data.properties");
+            prop.load(ip);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @BeforeTest
+    protected static void setUp(){
 
         try{
             File chromeDriver = new File("/home/serhii/chromedriver");
@@ -26,10 +50,12 @@ public class TestBase {
             optionsChrome.addArguments("start-maximized");
 
             driver = new ChromeDriver(serviceChrome, optionsChrome);
-
             driver.manage().window().maximize();
+            wait = new WebDriverWait(driver, 10);
 
-            driver.manage().deleteAllCookies();
+            Map<String, Object> prefs = new HashMap<String, Object>();
+            prefs.put("profile.default_content_setting_values.notifications", 2);
+            optionsChrome.setExperimentalOption("prefs", prefs);
 
         } catch (Exception e){
             e.printStackTrace();
@@ -38,7 +64,12 @@ public class TestBase {
     }
 
     @AfterClass
-    public void destroyDriver(){
+    public void tearDown(){
+        LoginPage loginPage = new LoginPage();
+        loginPage.signOutAccount();
+        Assert.assertTrue(loginPage.verifyUserSignOut());
+        System.out.println("SUCCESSFUL SIGN_OUT");
         driver.quit();
     }
+
 }

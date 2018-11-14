@@ -1,22 +1,35 @@
 package com.udacity.tests;
 
 import com.udacity.pages.HomePage;
-import org.testng.annotations.Test;
+import com.udacity.pages.LoginPage;
+import org.testng.Assert;
+import org.testng.annotations.*;
 
-import static com.udacity.UserData.EMAIL;
-import static com.udacity.UserData.PASSWORD;
 
 public class LoginTest extends TestBase {
 
-    @Test(priority = 1, description = "Login user")
+    private LoginPage loginPage;
+    private HomePage homePage;
+
+    public LoginTest(){
+        super();
+    }
+
+    @BeforeMethod
+    public void initialize(){
+        loginPage = new LoginPage();
+        homePage = new HomePage();
+    }
+
+    @Test(description = "Login user")
     public void loginTest(){
-        System.out.println("LOgin test!!!!!!!!!!!!");
-        HomePage homePage = new HomePage(driver);
-
         homePage.goToHomePage()
-                .goToLoginPage()
-                .signInToAccount(EMAIL, PASSWORD);
-
+                .goToLoginPage();
+        loginPage.setEmailAddress(prop.getProperty("EMAIL"));
+        loginPage.setPassword(prop.getProperty("PASSWORD"));
+        loginPage.signInClick();
+        Assert.assertTrue(loginPage.verifyUserSignIn());
+        System.out.println("SIGN_IN WAS SUCCESSFUL");
     }
 
 }

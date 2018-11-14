@@ -14,9 +14,9 @@
     <test name="verifyUserInfoTest">
         <classes>
 
-            <class name="com.udacity.tests.AccountSettingsTest" />
+            <class name="com.udacity.tests.PersonalInfoTest" />
 
         </classes>
-    </test>
 
+    </test>
 </suite>

@@ -2,21 +2,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Udacity" verbose="1" >
-
     <test name="loginTest" >
-
         <classes>
-
-            <class name="LoginTest"/>
-
-        </classes>
-    </test>
-    <test name="userInfoTest" >
-
-        <classes>
-
-            <class name="AccountInfoTest"/>
-
+            <class name="VerifyUserInfoTest"/>
         </classes>
     </test>
 </suite>

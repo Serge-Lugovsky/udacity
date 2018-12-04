@@ -8,6 +8,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage extends Page  {
 
+    @FindBy(xpath = "//*[@class='modal-close white']")
+    private WebElement popUp;
+
     @FindBy(xpath = "(//*[@title='Sign In'])[2]")
     private WebElement signInLink;
 
@@ -16,7 +19,14 @@ public class HomePage extends Page  {
     }
 
     public HomePage popUpClose(){
+
+        try{
+            new WebDriverWait(driver, 1)
+                    .until(ExpectedConditions.elementToBeClickable(popUp));
+            popUp.click();
+        }catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e){
             actions.sendKeys(Keys.ESCAPE).build().perform();
+        }
         return this;
     }
 

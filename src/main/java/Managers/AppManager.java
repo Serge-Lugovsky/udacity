@@ -4,15 +4,15 @@ import Drivers.Driver;
 import Models.User;
 import Utils.PropertyLoader;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class AppManager {
 
     private UserHelper userHelper;
-    private AccountHelper accountHelper;
+    private AttributeHelper attributeHelper;
+    private NavigationHelper navigationHelper;
     private WebDriver driver;
     private User loginUser;
-    private DesiredCapabilities capabilities;
+    private String browserName;
     private String baseUrl;
     private String userFirstName;
     private String userLastName;
@@ -21,21 +21,20 @@ public class AppManager {
 
 
     public AppManager(){
-        capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName(PropertyLoader.loadProperty("browser.name"));
-
+        browserName = PropertyLoader.loadProperty("browser.name");
         baseUrl = PropertyLoader.loadProperty("BASE_URL");
         userFirstName = PropertyLoader.loadProperty("FIRST_USER_NAME");
         userLastName = PropertyLoader.loadProperty("LAST_USER_NAME");
         password = PropertyLoader.loadProperty("PASSWORD");
         email = PropertyLoader.loadProperty("EMAIL");
 
-        driver = new Driver().setupDriver(capabilities);
+        driver = new Driver().setupDriver(browserName);
         driver.get(baseUrl);
 
         loginUser = new User(email, password, userFirstName, userLastName);
-        accountHelper = new AccountHelper(this);
+        attributeHelper = new AttributeHelper(this);
         userHelper = new UserHelper(this);
+        navigationHelper = new NavigationHelper(this);
 
 
     }
@@ -48,8 +47,12 @@ public class AppManager {
         return userHelper;
     }
 
-    public AccountHelper getAccountHelper(){
-        return accountHelper;
+    public AttributeHelper getAttributeHelper() {
+        return attributeHelper;
+    }
+
+    public NavigationHelper getNavigationHelper(){
+        return navigationHelper;
     }
 
     public WebDriver getDriver(){

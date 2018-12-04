@@ -6,9 +6,9 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class AccountPage extends Page {
 
@@ -63,14 +63,14 @@ public class AccountPage extends Page {
         return emailField.getAttribute("value");
     }
 
-    public boolean verifyAuth(){
+    public boolean verifyLogin(){
+
         try {
-            wait.until(ExpectedConditions.visibilityOf(logoutButton));
+            wait.until(visibilityOf(logoutButton));
 
         }catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
-
-            System.out.println(e.getMessage());
-
+            driver.get("https://classroom.udacity.com/me");
+            wait.until(visibilityOf(logoutButton));
         }
         return logoutButton.isDisplayed();
     }
@@ -82,16 +82,16 @@ public class AccountPage extends Page {
     }
 
     public boolean verifyLogOut(){
+
         try{
 
-            wait.until(ExpectedConditions.visibilityOf(signInLink));
+            wait.until(visibilityOf(signInLink));
 
         }catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
 
-            System.out.println(e.getMessage());
-
+            driver.get("https://www.udacity.com");
+            wait.until(visibilityOf(signInLink));
         }
-
         return signInLink.isDisplayed();
     }
 

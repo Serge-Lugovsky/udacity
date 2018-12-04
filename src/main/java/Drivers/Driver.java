@@ -1,6 +1,5 @@
 package Drivers;
 
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
@@ -8,16 +7,16 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.GeckoDriverService;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class Driver {
 
-    public WebDriver setupDriver(Capabilities capabilities){
+    public WebDriver setupDriver(String browserName){
 
-        switch (capabilities.getBrowserName()){
+        switch (browserName){
             case "chrome":
                 File chromeDriver = new File("/home/serhii/chromedriver");
                 ChromeDriverService serviceChrome = new ChromeDriverService.Builder()

@@ -8,17 +8,27 @@ public class UserHelper extends PageManager {
         super(manager.getDriver());
     }
 
+    public void popUpClose(){
+        homePage.popUpClose();
+    }
+
     public void loginAs(User user){
-        homePage
-                .popUpClose()
-                .goToLoginPage();
-        loginPage.inputEmail(user.getEmail())
+        loginPage
+                .inputEmail(user.getEmail())
                 .inputPassword(user.getPassword())
                 .signInClick();
     }
 
     public boolean verifyAuth() {
-        return accountPage.verifyAuth();
+        return accountPage.verifyLogin();
+    }
+
+    public void logOutFromAccount(){
+        accountPage.logOutAccount();
+    }
+
+    public boolean verifyLogOut(){
+        return accountPage.verifyLogOut();
     }
 
 

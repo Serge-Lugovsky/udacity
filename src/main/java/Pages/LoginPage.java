@@ -3,6 +3,8 @@ package Pages;
 import Managers.PageManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
 
 public class LoginPage extends Page {
 
@@ -20,6 +22,7 @@ public class LoginPage extends Page {
     }
 
     public LoginPage inputEmail(String email){
+        wait.until(ExpectedConditions.elementToBeClickable(emailField));
         emailField.clear();
         emailField.sendKeys(email);
         System.out.println("ENTRY EMAIL");

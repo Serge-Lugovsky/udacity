@@ -10,6 +10,7 @@ public class AppManager {
     private UserHelper userHelper;
     private AttributeHelper attributeHelper;
     private NavigationHelper navigationHelper;
+    private CourseHelper courseHelper;
     private WebDriver driver;
     private User loginUser;
     private String browserName;
@@ -35,8 +36,7 @@ public class AppManager {
         attributeHelper = new AttributeHelper(this);
         userHelper = new UserHelper(this);
         navigationHelper = new NavigationHelper(this);
-
-
+        courseHelper = new CourseHelper(this);
     }
 
     public User getUser(){
@@ -53,6 +53,10 @@ public class AppManager {
 
     public NavigationHelper getNavigationHelper(){
         return navigationHelper;
+    }
+
+    public CourseHelper getCourseHelper() {
+        return courseHelper;
     }
 
     public WebDriver getDriver(){

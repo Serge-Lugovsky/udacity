@@ -1,9 +1,6 @@
 package Managers;
 
-import Pages.HomePage;
-import Pages.LoginPage;
-import Pages.Page;
-import Pages.AccountPage;
+import Pages.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
@@ -14,12 +11,16 @@ public class PageManager {
     HomePage homePage;
     LoginPage loginPage;
     AccountPage accountPage;
+    AllCoursesPage allCoursesPage;
+    CoursePage coursePage;
 
     public PageManager(WebDriver driver){
         this.driver = driver;
         homePage = initElements(new HomePage(this));
         loginPage = initElements(new LoginPage(this));
         accountPage = initElements(new AccountPage(this));
+        allCoursesPage = initElements(new AllCoursesPage(this));
+        coursePage = initElements(new CoursePage(this));
     }
 
     private <T extends Page> T initElements(T page){

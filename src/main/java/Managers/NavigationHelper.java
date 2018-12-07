@@ -17,4 +17,14 @@ public class NavigationHelper extends PageManager {
                 .clickPersonalInfoLink();
     }
 
+    public void goAllCoursesPage(){
+        accountPage
+                .goToCatalog();
+    }
+
+    public void goFirstCoursePage(){
+        allCoursesPage
+                .goFirstCourseLink();
+    }
+
 }

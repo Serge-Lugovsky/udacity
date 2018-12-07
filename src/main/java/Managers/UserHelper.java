@@ -31,5 +31,4 @@ public class UserHelper extends PageManager {
         return accountPage.verifyLogOut();
     }
 
-
 }

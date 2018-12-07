@@ -17,4 +17,16 @@ public class AttributeHelper extends PageManager {
     public String getEmail(){
         return accountPage.getUserEmailAddress();
     }
+
+    public void getFirstCourseLinkText(){
+       allCoursesPage.getCourseLinkText();
+    }
+
+    public String firstCourseLinkText(){
+        return allCoursesPage.getTextFirstCourseLink();
+    }
+
+    public String getCourseH1Text(){
+        return coursePage.getTextH1OnFirstElemPage();
+    }
 }

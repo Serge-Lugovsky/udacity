@@ -6,9 +6,9 @@ public class CourseHelper extends PageManager {
         super(manager.getDriver());
     }
 
-    public void searchCourses(){
+    public void searchCourses(String searchText){
         allCoursesPage
-                .searchSmth("android")
+                .searchSmth(searchText)
                 .waitSearchRes();
     }
 

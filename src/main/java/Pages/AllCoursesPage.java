@@ -19,6 +19,9 @@ public class AllCoursesPage extends Page{
     @FindBy(xpath = "//*[contains(@class, 'course-summary-card')]")
     private List<WebElement> coursesList;
 
+    @FindBy(xpath = "//span[@class='filters ng-star-inserted']")
+    private WebElement searchFilterText;
+
     private WebElement learnMoreButton;
 
     private WebElement firstCourseLink;
@@ -45,6 +48,11 @@ public class AllCoursesPage extends Page{
             ExpectedConditions.visibilityOf(confirmSearch),
             ExpectedConditions.textToBe(By.xpath("//span[@class='filters ng-star-inserted']"),"android")
         ));
+    }
+
+    public String getValueOfSearch(){
+        wait.until(ExpectedConditions.visibilityOf(searchFilterText));
+        return searchFilterText.getText();
     }
 
     public void getForAllElem(){

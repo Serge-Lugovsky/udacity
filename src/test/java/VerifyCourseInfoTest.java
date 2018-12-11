@@ -7,13 +7,13 @@ public class VerifyCourseInfoTest extends TestBase {
     public void verifyCourseLinkTextTest(){
         app.getNavigationHelper().goAllCoursesPage();
         app.getAttributeHelper().waitForElements();
-        app.getCourseHelper().searchCourses("android");
-        Assert.assertEquals(app.getAttributeHelper().getSearchResult(), "android");
+        app.getCourseHelper().searchCourses(app.getCourse().getCourseName());
+        Assert.assertEquals(app.getAttributeHelper().getSearchResult(), app.getCourse().getCourseName());
         System.out.println("SEARCH WAS SUCCESSFUL");
         app.getAttributeHelper().getFirstCourseLinkText();
         app.getNavigationHelper().goFirstCoursePage();
         Assert.assertTrue(app.getAttributeHelper().getCourseH1Text().toLowerCase().trim()
-                .contains("android"));
+                .contains(app.getCourse().getCourseName()));
         System.out.println("COURSE H1 TEXT CONTAINS  SEARCH TEXT");
         Assert.assertTrue(app.getAttributeHelper().getCourseH1Text().toLowerCase().trim()
                 .contains(app.getAttributeHelper().firstCourseLinkText().toLowerCase().trim()));
@@ -24,8 +24,8 @@ public class VerifyCourseInfoTest extends TestBase {
     public void verifyCourseLearnMoreButtonTest(){
         app.getNavigationHelper().goAllCoursesPage();
         app.getAttributeHelper().waitForElements();
-        app.getCourseHelper().searchCourses("android");
-        Assert.assertEquals(app.getAttributeHelper().getSearchResult(), "android");
+        app.getCourseHelper().searchCourses(app.getCourse().getCourseName());
+        Assert.assertEquals(app.getAttributeHelper().getSearchResult(), app.getCourse().getCourseName());
         System.out.println("SEARCH WAS SUCCESSFUL");
         app.getCourseHelper().openCourseSubMenu();
         Assert.assertTrue(app.getCourseHelper().findLearnMoreBtn());

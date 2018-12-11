@@ -36,6 +36,7 @@ public class AttributeHelper extends PageManager {
 
     public String getSearchResult(){
         return allCoursesPage.getValueOfSearch();
+
     }
 
 }

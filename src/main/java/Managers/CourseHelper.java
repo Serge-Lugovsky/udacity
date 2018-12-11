@@ -9,7 +9,7 @@ public class CourseHelper extends PageManager {
     public void searchCourses(String searchText){
         allCoursesPage
                 .searchSmth(searchText)
-                .waitSearchRes();
+                .waitSearchRes(searchText);
     }
 
     public void openCourseSubMenu(){

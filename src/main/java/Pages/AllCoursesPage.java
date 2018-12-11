@@ -43,10 +43,10 @@ public class AllCoursesPage extends Page{
         return this;
     }
 
-    public void waitSearchRes(){
+    public void waitSearchRes(String searchText){
         wait.until(ExpectedConditions.and(
             ExpectedConditions.visibilityOf(confirmSearch),
-            ExpectedConditions.textToBe(By.xpath("//span[@class='filters ng-star-inserted']"),"android")
+            ExpectedConditions.textToBe(By.xpath("//span[@class='filters ng-star-inserted']"),searchText)
         ));
     }
 

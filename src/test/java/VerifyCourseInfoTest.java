@@ -6,6 +6,7 @@ public class VerifyCourseInfoTest extends TestBase {
     @Test(priority = 1, description = "VERIFY COURSE LINK TEXT")
     public void verifyCourseLinkTextTest(){
         app.getNavigationHelper().goAllCoursesPage();
+        app.getAttributeHelper().waitForElements();
         app.getCourseHelper().searchCourses();
         app.getAttributeHelper().getFirstCourseLinkText();
         app.getNavigationHelper().goFirstCoursePage();
@@ -17,6 +18,7 @@ public class VerifyCourseInfoTest extends TestBase {
     @Test(priority = 2, description = "VERIFY COURSE LEARN MORE BTN IN SUBMENU")
     public void verifyCourseLearnMoreButtonTest(){
         app.getNavigationHelper().goAllCoursesPage();
+        app.getAttributeHelper().waitForElements();
         app.getCourseHelper().searchCourses();
         app.getCourseHelper().openCourseSubMenu();
         Assert.assertTrue(app.getCourseHelper().findLearnMoreBtn());

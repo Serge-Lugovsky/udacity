@@ -7,8 +7,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class AccountPage extends Page {
 
@@ -41,45 +39,48 @@ public class AccountPage extends Page {
     }
 
     public AccountPage clickSettingsButton() {
-        wait.until(elementToBeClickable(settingsButton));
+        wait.until(ExpectedConditions.elementToBeClickable(settingsButton));
         settingsButton.click();
         return this;
     }
 
     public AccountPage clickPersonalInfoLink() {
-        wait.until(elementToBeClickable(personalInfoMenuLink));
+        wait.until(ExpectedConditions.elementToBeClickable(personalInfoMenuLink));
         personalInfoMenuLink.click();
         return this;
     }
 
     public void goToCatalog(){
-        wait.until(elementToBeClickable(catalog));
+        wait.until(ExpectedConditions.elementToBeClickable(catalog));
         String oldTab = driver.getWindowHandle();
         catalog.click();
         ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
-        tabs.remove(oldTab);
-        driver.close();
-        driver.switchTo().window(tabs.get(0));
+            tabs.remove(oldTab);
+            driver.close();
+            driver.switchTo().window(tabs.get(0));
     }
 
 //=================================|GET USER DATA|=================================================
 
     public String getUserFirstName() {
+        wait.until(ExpectedConditions.elementToBeClickable(firstNameField));
         return firstNameField.getAttribute("value");
     }
 
     public String getUserLastName() {
+        wait.until(ExpectedConditions.elementToBeClickable(lastNameField));
         return lastNameField.getAttribute("value");
     }
 
     public String getUserEmailAddress() {
+        wait.until(ExpectedConditions.elementToBeClickable(emailField));
         return emailField.getAttribute("value");
     }
 
     public boolean verifyLogin(){
 
         try {
-            wait.until(visibilityOf(logoutButton));
+            wait.until(ExpectedConditions.visibilityOf(logoutButton));
 
         }catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
             driver.get("https://classroom.udacity.com/me");
@@ -100,12 +101,12 @@ public class AccountPage extends Page {
 
         try{
 
-            wait.until(visibilityOf(signInLink));
+            wait.until(ExpectedConditions.visibilityOf(signInLink));
 
         }catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
 
             driver.get("https://www.udacity.com");
-            wait.until(visibilityOf(signInLink));
+            wait.until(ExpectedConditions.visibilityOf(signInLink));
         }
         return signInLink.isDisplayed();
     }

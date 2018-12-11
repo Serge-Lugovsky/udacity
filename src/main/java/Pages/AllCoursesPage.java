@@ -4,6 +4,7 @@ import Managers.PageManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import java.util.List;
 
 
@@ -32,25 +33,34 @@ public class AllCoursesPage extends Page{
     }
 
     public AllCoursesPage searchSmth(String searchText){
-        try {
-            wait.until(ExpectedConditions.invisibilityOf(searchField));
-            searchField.clear();
-            searchField.sendKeys(searchText);
-            System.out.println("Search course");
-            wait.until(ExpectedConditions.visibilityOf(confirmSearch));
-
-        }catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
-            searchField.clear();
-            searchField.sendKeys(searchText);
-            System.out.println("Search course");
-            wait.until(ExpectedConditions.visibilityOf(confirmSearch));
-        }
+        wait.until(ExpectedConditions.elementToBeClickable(searchField));
+        searchField.clear();
+        searchField.sendKeys(searchText);
+        System.out.println("Search course");
         return this;
+    }
+
+    public void waitSearchRes(){
+        wait.until(ExpectedConditions.and(
+            ExpectedConditions.visibilityOf(confirmSearch),
+            ExpectedConditions.textToBe(By.xpath("//span[@class='filters ng-star-inserted']"),"android")
+        ));
+    }
+
+    public void getForAllElem(){
+        try {
+            wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath("//div[@class='card-content']"), 230));
+            List<WebElement> listOfNames = driver.findElements(By.xpath("//div[@class='card-content']//a"));
+            wait.until(ExpectedConditions.elementToBeClickable(listOfNames.get(0)));
+        }catch (StaleElementReferenceException e){
+            getForAllElem();
+        }
     }
 
     public AllCoursesPage openFirstCourseSubMenu() {
         firstCourseSubmenu = coursesList.get(0).findElement(By.xpath(".//span[contains(text(), 'Details')]"));
-        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + firstCourseSubmenu.getLocation().y + ")");
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", firstCourseSubmenu);
         firstCourseSubmenu.click();
         return this;
     }
@@ -61,18 +71,19 @@ public class AllCoursesPage extends Page{
         return learnMoreButton.isDisplayed();
     }
 
-    public void getCourseLinkText(){
+    public void saveCourseLinkText(){
         firstCourseLink = coursesList.get(0).findElement(By.xpath(".//h3/a"));
         wait.until(ExpectedConditions.visibilityOf(firstCourseLink));
-        textFirstCourseLink = firstCourseLink.getAttribute("text");
+        textFirstCourseLink = firstCourseLink.getText();
     }
 
-    public String getTextFirstCourseLink(){
+    public String getCourseLinkText(){
         return textFirstCourseLink;
     }
 
     public void goFirstCourseLink(){
         firstCourseLink = coursesList.get(0).findElement(By.xpath(".//h3/a"));
+        wait.until(ExpectedConditions.elementToBeClickable(firstCourseLink));
         firstCourseLink.click();
     }
 

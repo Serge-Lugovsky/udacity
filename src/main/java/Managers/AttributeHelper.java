@@ -19,14 +19,19 @@ public class AttributeHelper extends PageManager {
     }
 
     public void getFirstCourseLinkText(){
-       allCoursesPage.getCourseLinkText();
+       allCoursesPage.saveCourseLinkText();
     }
 
     public String firstCourseLinkText(){
-        return allCoursesPage.getTextFirstCourseLink();
+        return allCoursesPage.getCourseLinkText();
     }
 
     public String getCourseH1Text(){
         return coursePage.getTextH1OnFirstElemPage();
     }
+
+    public void waitForElements(){
+        allCoursesPage.getForAllElem();
+    }
+
 }

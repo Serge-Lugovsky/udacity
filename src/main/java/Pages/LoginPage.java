@@ -30,6 +30,7 @@ public class LoginPage extends Page {
     }
 
     public LoginPage inputPassword(String password){
+        wait.until(ExpectedConditions.elementToBeClickable(passField));
         passField.clear();
         passField.sendKeys(password);
         System.out.println("ENTRY PASSWORD");
@@ -37,6 +38,7 @@ public class LoginPage extends Page {
     }
 
     public void signInClick(){
+        wait.until(ExpectedConditions.elementToBeClickable(signInKey));
         signInKey.click();
         System.out.println("LOGINING...");
     }

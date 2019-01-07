@@ -1,6 +1,7 @@
 package Pages;
 
 import Managers.PageManager;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -21,25 +22,25 @@ public class LoginPage extends Page {
         super(pages);
     }
 
+    @Step("Input email")
     public LoginPage inputEmail(String email){
         wait.until(ExpectedConditions.elementToBeClickable(emailField));
         emailField.clear();
         emailField.sendKeys(email);
-        System.out.println("ENTRY EMAIL");
         return this;
     }
 
+    @Step("Input password")
     public LoginPage inputPassword(String password){
         wait.until(ExpectedConditions.elementToBeClickable(passField));
         passField.clear();
         passField.sendKeys(password);
-        System.out.println("ENTRY PASSWORD");
         return this;
     }
 
+    @Step("Click signIn button")
     public void signInClick(){
         wait.until(ExpectedConditions.elementToBeClickable(signInKey));
         signInKey.click();
-        System.out.println("LOGINING...");
     }
 }

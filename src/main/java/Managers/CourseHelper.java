@@ -2,7 +2,7 @@ package Managers;
 
 public class CourseHelper extends PageManager {
 
-    public CourseHelper(AppManager manager){
+    protected CourseHelper(AppManager manager){
         super(manager.getDriver());
     }
 

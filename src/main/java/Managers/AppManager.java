@@ -15,25 +15,19 @@ public class AppManager {
     private WebDriver driver;
     private User loginUser;
     private Course course;
-    private String browserName;
-    private String baseUrl;
-    private String userFirstName;
-    private String userLastName;
-    private String password;
-    private String email;
-    private String courseName;
 
 
-    public AppManager(){
-        browserName = PropertyLoader.loadProperty("browser.name");
-        baseUrl = PropertyLoader.loadProperty("BASE_URL");
-        userFirstName = PropertyLoader.loadProperty("FIRST_USER_NAME");
-        userLastName = PropertyLoader.loadProperty("LAST_USER_NAME");
-        password = PropertyLoader.loadProperty("PASSWORD");
-        email = PropertyLoader.loadProperty("EMAIL");
-        courseName = PropertyLoader.loadProperty("COURSE_NAME");
+    protected AppManager(){
+        String browserName = PropertyLoader.loadProperty("browser.name");
+        String headless = PropertyLoader.loadProperty("head.less");
+        String baseUrl = PropertyLoader.loadProperty("BASE_URL");
+        String userFirstName = PropertyLoader.loadProperty("FIRST_USER_NAME");
+        String userLastName = PropertyLoader.loadProperty("LAST_USER_NAME");
+        String password = PropertyLoader.loadProperty("PASSWORD");
+        String email = PropertyLoader.loadProperty("EMAIL");
+        String courseName = PropertyLoader.loadProperty("COURSE_NAME");
 
-        driver = new Driver().setupDriver(browserName);
+        driver = new Driver().setupDriver(browserName, headless);
         driver.get(baseUrl);
 
         loginUser = new User(email, password, userFirstName, userLastName);

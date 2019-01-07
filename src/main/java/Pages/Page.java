@@ -1,6 +1,7 @@
 package Pages;
 
 import Managers.PageManager;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -12,11 +13,13 @@ public abstract class Page {
     WebDriverWait wait;
     PageManager pages;
     Actions actions;
+    JavascriptExecutor jse;
 
-    public Page(PageManager pages){
+    protected Page(PageManager pages){
         this.pages = pages;
         driver = pages.getDriver();
-        wait = new WebDriverWait(driver, 6);
+        wait = new WebDriverWait(driver, 10);
         actions = new Actions(driver);
+        jse = (JavascriptExecutor) driver;
     }
 }

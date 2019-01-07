@@ -1,36 +1,44 @@
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Listeners(ScreenShotOnFailListener.class)
 public class VerifyCourseInfoTest extends TestBase {
 
-    @Test(priority = 1, description = "VERIFY COURSE LINK TEXT")
+    @Test(priority = 1, description = "VERIFY COURSE LINK TEXT", invocationCount = 1,
+            groups = {"debugGroup", "fullGroup"})
+    @Severity(SeverityLevel.NORMAL)
+    @Story("VERIFY COURSE LINK TEXT")
+    @Description("VERIFY COURSE LINK TEXT")
     public void verifyCourseLinkTextTest(){
         app.getNavigationHelper().goAllCoursesPage();
         app.getAttributeHelper().waitForElements();
         app.getCourseHelper().searchCourses(app.getCourse().getCourseName());
         Assert.assertEquals(app.getAttributeHelper().getSearchResult(), app.getCourse().getCourseName());
-        System.out.println("SEARCH WAS SUCCESSFUL");
         app.getAttributeHelper().getFirstCourseLinkText();
         app.getNavigationHelper().goFirstCoursePage();
         Assert.assertTrue(app.getAttributeHelper().getCourseH1Text().toLowerCase().trim()
                 .contains(app.getCourse().getCourseName()));
-        System.out.println("COURSE H1 TEXT CONTAINS  SEARCH TEXT");
         Assert.assertTrue(app.getAttributeHelper().getCourseH1Text().toLowerCase().trim()
                 .contains(app.getAttributeHelper().firstCourseLinkText().toLowerCase().trim()));
-        System.out.println("COURSE LINK TEXT IS CONTAINS COURSE H1 TEXT!");
     }
 
-    @Test(priority = 2, description = "VERIFY COURSE LEARN MORE BTN IN SUBMENU")
+    @Test(priority = 2, description = "VERIFY COURSE LEARN MORE BTN IN SUBMENU", invocationCount = 1,
+            groups = {"debugGroup", "fullGroup"})
+    @Severity(SeverityLevel.NORMAL)
+    @Story("VERIFY COURSE LEARN MORE BTN IN SUBMENU")
+    @Description("VERIFY COURSE LEARN MORE BTN IN SUBMENU")
     public void verifyCourseLearnMoreButtonTest(){
         app.getNavigationHelper().goAllCoursesPage();
         app.getAttributeHelper().waitForElements();
         app.getCourseHelper().searchCourses(app.getCourse().getCourseName());
         Assert.assertEquals(app.getAttributeHelper().getSearchResult(), app.getCourse().getCourseName());
-        System.out.println("SEARCH WAS SUCCESSFUL");
         app.getCourseHelper().openCourseSubMenu();
         Assert.assertTrue(app.getCourseHelper().findLearnMoreBtn());
-        System.out.println("LEARN MORE BTN IS DISPLAYED!");
     }
-
 
 }

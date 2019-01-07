@@ -1,6 +1,7 @@
 package Pages;
 
 import Managers.PageManager;
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -38,65 +39,71 @@ public class AccountPage extends Page {
         super(pages);
     }
 
+    @Step("Click settings button")
     public AccountPage clickSettingsButton() {
         wait.until(ExpectedConditions.elementToBeClickable(settingsButton));
-        settingsButton.click();
+        jse.executeScript("arguments[0].click();", settingsButton);
         return this;
     }
 
-    public AccountPage clickPersonalInfoLink() {
+    @Step("Click personal info link")
+    public void clickPersonalInfoLink() {
         wait.until(ExpectedConditions.elementToBeClickable(personalInfoMenuLink));
         personalInfoMenuLink.click();
-        return this;
     }
 
+    @Step("Go to courses catalog page")
     public void goToCatalog(){
-        wait.until(ExpectedConditions.elementToBeClickable(catalog));
         String oldTab = driver.getWindowHandle();
-        catalog.click();
-        ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+        wait.until(ExpectedConditions.elementToBeClickable(catalog));
+        jse.executeScript("arguments[0].click();", catalog);
+        ArrayList<String> tabs = new ArrayList<> (driver.getWindowHandles());
             tabs.remove(oldTab);
             driver.close();
             driver.switchTo().window(tabs.get(0));
     }
 
 //=================================|GET USER DATA|=================================================
-
+    @Step("Get first user name from input")
     public String getUserFirstName() {
         wait.until(ExpectedConditions.elementToBeClickable(firstNameField));
         return firstNameField.getAttribute("value");
     }
 
+    @Step("Get last user name fron input")
     public String getUserLastName() {
         wait.until(ExpectedConditions.elementToBeClickable(lastNameField));
         return lastNameField.getAttribute("value");
     }
 
+    @Step("Get user email from input")
     public String getUserEmailAddress() {
         wait.until(ExpectedConditions.elementToBeClickable(emailField));
         return emailField.getAttribute("value");
     }
 
+    @Step("Check login")
     public boolean verifyLogin(){
 
         try {
-            wait.until(ExpectedConditions.visibilityOf(logoutButton));
+            wait.until(ExpectedConditions.urlToBe("https://classroom.udacity.com/me"));
 
         }catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
-            driver.get("https://classroom.udacity.com/me");
+            driver.get("https://classroom.udacity.com");
             wait.until(ExpectedConditions.visibilityOf(logoutButton));
         }
+        wait.until(ExpectedConditions.visibilityOf(logoutButton));
         return logoutButton.isDisplayed();
     }
 //======================================================================================================================
-
+    @Step("Logout from account")
     public void logOutAccount() {
         driver.get("https://classroom.udacity.com/me");
         wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
-        logoutButton.click();
-        System.out.println("LOGOUT");
+        jse.executeScript("arguments[0].click();", logoutButton);
     }
 
+    @Step("Check logout")
     public boolean verifyLogOut(){
 
         try{

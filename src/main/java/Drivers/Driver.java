@@ -14,31 +14,39 @@ import java.util.Map;
 
 public class Driver {
 
-    public WebDriver setupDriver(String browserName){
+    public WebDriver setupDriver(String browserName, String headless){
 
         switch (browserName){
             case "chrome":
-                File chromeDriver = new File("/home/serhii/chromedriver");
+                File chromeDriver = new File("./src/main/resources/chromedriver");
                 ChromeDriverService serviceChrome = new ChromeDriverService.Builder()
                         .usingDriverExecutable(chromeDriver)
                         .usingAnyFreePort()
                         .build();
                 ChromeOptions optionsChrome = new ChromeOptions();
+
+                if (headless.equals("--headless")){
+                    optionsChrome.addArguments("--headless","--disable-gpu", "--window-size=1366,768","--ignore-certificate-errors");
+                }
                 optionsChrome.addArguments("start-maximized");
 
-                Map<String, Object> prefs = new HashMap<String, Object>();
+                Map<String, Object> prefs = new HashMap<>();
                 prefs.put("profile.default_content_setting_values.notifications", 2);
                 optionsChrome.setExperimentalOption("prefs", prefs);
 
                 return new ChromeDriver(serviceChrome, optionsChrome);
 
             case "firefox":
-                File firefoxDriver = new File("/home/serhii/geckodriver");
+                File firefoxDriver = new File("./src/main/resources/geckodriver");
                 GeckoDriverService serviceFirefox = new GeckoDriverService.Builder()
                         .usingDriverExecutable(firefoxDriver)
                         .usingAnyFreePort()
                         .build();
                 FirefoxOptions optionsFirefox = new FirefoxOptions();
+
+                if (headless.equals("--headless")){
+                    optionsFirefox.addArguments("--headless","--disable-gpu", "--window-size=1366,768","--ignore-certificate-errors");
+                }
 
                 return new FirefoxDriver(serviceFirefox, optionsFirefox);
         }

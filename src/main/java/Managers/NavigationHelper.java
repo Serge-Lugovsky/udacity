@@ -2,7 +2,7 @@ package Managers;
 
 public class NavigationHelper extends PageManager {
 
-    public NavigationHelper(AppManager manager){
+    protected NavigationHelper(AppManager manager){
         super(manager.getDriver());
     }
 
@@ -25,6 +25,10 @@ public class NavigationHelper extends PageManager {
     public void goFirstCoursePage(){
         allCoursesPage
                 .goFirstCourseLink();
+    }
+
+    public void goLinkPage(String linkName){
+        allCoursesPage.goToNavbarLinkPage(linkName);
     }
 
 }

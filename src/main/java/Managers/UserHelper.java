@@ -4,7 +4,7 @@ import Models.User;
 
 public class UserHelper extends PageManager {
 
-    public UserHelper(AppManager manager){
+    protected UserHelper(AppManager manager){
         super(manager.getDriver());
     }
 

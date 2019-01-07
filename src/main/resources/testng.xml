@@ -2,14 +2,19 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Udacity" verbose="1" >
-    <test name="verifyUserInfoTest" >
+    <test name="User info test">
         <classes>
             <class name="VerifyUserInfoTest"/>
         </classes>
     </test>
-    <test name="verifyCourseInfoTest">
+    <test name="Course info test">
         <classes>
             <class name="VerifyCourseInfoTest"/>
+        </classes>
+    </test>
+    <test name="Navigation test1">
+        <classes>
+            <class name="NavigationTest"/>
         </classes>
     </test>
 </suite>

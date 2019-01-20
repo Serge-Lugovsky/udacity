@@ -39,8 +39,8 @@ public class AttributeHelper extends PageManager {
 
     }
 
-    public boolean getVerifyResult(){
-        return allCoursesPage.verifyNavbarLink();
+    public String getCurrentPageUrl(){
+        return allCoursesPage.getCurrentUrl();
     }
 
     public boolean getStatusPageCode(){

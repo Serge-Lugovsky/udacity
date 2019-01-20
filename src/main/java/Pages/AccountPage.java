@@ -70,7 +70,7 @@ public class AccountPage extends Page {
         return firstNameField.getAttribute("value");
     }
 
-    @Step("Get last user name fron input")
+    @Step("Get last user name from input")
     public String getUserLastName() {
         wait.until(ExpectedConditions.elementToBeClickable(lastNameField));
         return lastNameField.getAttribute("value");

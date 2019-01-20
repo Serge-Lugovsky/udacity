@@ -1,18 +1,16 @@
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(ScreenShotOnFailListener.class)
+@Listeners({ScreenShotOnFailListener.class})
 public class VerifyUserInfoTest extends TestBase {
 
-    @Test(description = "Verify user personal Information", groups = {"debugGroup","fullGroup"}, invocationCount = 1)
+    @Test(description = "Verify user personal Information", groups = {"debugGroup","fullGroup"})
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Check user email last and first name")
-    @Description("Verify user personal Information")
+    @Description("Verify user personal information")
     public void verifyUserInfoTest(){
         app.getNavigationHelper().moveToUserInfo();
         Assert.assertEquals(app.getAttributeHelper().getFirstName(), app.getUser().getUserFirstName());

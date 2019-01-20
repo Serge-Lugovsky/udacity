@@ -18,7 +18,7 @@ public abstract class Page {
     protected Page(PageManager pages){
         this.pages = pages;
         driver = pages.getDriver();
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, 20);
         actions = new Actions(driver);
         jse = (JavascriptExecutor) driver;
     }

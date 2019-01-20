@@ -3,6 +3,9 @@ import Managers.SingletonAppManager;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import static Utils.CopyDirectories.copyResultAndHistoryDirs;
+import static Utils.CopyDirectories.makeAllureReport;
+
 
 public class TestBase{
     AppManager app = SingletonAppManager.getInstance().manager;
@@ -24,6 +27,8 @@ public class TestBase{
     @AfterSuite(alwaysRun = true)
     public void tearDown(){
         app.getDriver().quit();
+        makeAllureReport();
+        copyResultAndHistoryDirs();
     }
 
     @BeforeGroups(groups = {"fullGroup"})

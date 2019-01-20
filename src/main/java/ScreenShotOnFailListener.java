@@ -1,12 +1,8 @@
-import io.qameta.allure.Allure;
-import io.qameta.allure.Step;
+import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.*;
-
-
-import java.io.ByteArrayInputStream;
 
 
 public class ScreenShotOnFailListener implements ITestListener {
@@ -14,43 +10,35 @@ public class ScreenShotOnFailListener implements ITestListener {
     private WebDriver driver;
 
     @Override
-    public void onTestStart(ITestResult iTestResult) {
-    }
+    public void onTestStart(ITestResult iTestResult) {}
 
     @Override
-    public void onTestSuccess(ITestResult iTestResult) {
-        screenShot(iTestResult);
-    }
+    public void onTestSuccess(ITestResult iTestResult) {}
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        screenShot(iTestResult);
+        saveScreenshot(iTestResult.getThrowable(), iTestResult);
     }
 
     @Override
-    public void onTestSkipped(ITestResult iTestResult) {
-        screenShot(iTestResult);
-    }
+    public void onTestSkipped(ITestResult iTestResult) {}
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
-        screenShot(iTestResult);
+        saveScreenshot(iTestResult.getThrowable(), iTestResult);
     }
 
     @Override
-    public void onStart(ITestContext iTestContext) {
-
-    }
+    public void onStart(ITestContext iTestContext) {}
 
     @Override
     public void onFinish(ITestContext iTestContext) {
 
     }
 
-    @Step("Make screen shot")
-    private void screenShot(ITestResult result){
+    @Attachment(value = "Error message:   {0} " , type = "image/png", fileExtension = ".jpg")
+    public byte[] saveScreenshot(Object errorMessage, ITestResult result){
         this.driver = ((TestBase)result.getInstance()).app.getDriver();
-        Allure.addAttachment("Screenshot",
-                new ByteArrayInputStream(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
+        return (((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES));
     }
 }

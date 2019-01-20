@@ -44,7 +44,7 @@ public class AllCoursesPage extends Page{
         super(pages);
     }
 
-    @Step("Search courses")
+    @Step("Search courses {0}")
     public AllCoursesPage searchSmth(String searchText){
         actions.sendKeys(Keys.ESCAPE).build().perform();
         wait.until(ExpectedConditions.elementToBeClickable(searchField));
@@ -136,15 +136,13 @@ public class AllCoursesPage extends Page{
         jse.executeScript("arguments[0].click();", firstCourseLink);
     }
 
-    @Step("Go to link in navbar")
+    @Step("Go to link '{0}' ")
     public void goToNavbarLinkPage(String linkName){
         if (navbarTopLinkList.size() > 0) {
             for (WebElement link : navbarTopLinkList) {
                 if (link.getText().trim().equals(linkName.trim())){
                     wait.until(ExpectedConditions.elementToBeClickable(link));
-                    hrefLink = link.getAttribute("href")
-                            .replaceAll("^(http://|https://)", "");
-                    System.out.println(hrefLink);
+                    hrefLink = link.getAttribute("href");
                     jse.executeScript("arguments[0].click();", link);
                     break;
                 }
@@ -153,9 +151,8 @@ public class AllCoursesPage extends Page{
     }
 
     @Step("Check navbar link")
-    public boolean verifyNavbarLink(){
-        return driver.getCurrentUrl().matches(
-                "^(http|https)://"+hrefLink+"/?(me)?$");
+    public String getCurrentUrl(){
+        return driver.getCurrentUrl();
     }
 
     @Step("Get page http status code")

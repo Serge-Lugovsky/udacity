@@ -2,7 +2,7 @@ package Managers;
 
 public class AttributeHelper extends PageManager {
 
-    protected AttributeHelper(AppManager manager){
+    AttributeHelper(AppManager manager){
         super(manager.getDriver());
     }
 
@@ -36,15 +36,13 @@ public class AttributeHelper extends PageManager {
 
     public String getSearchResult(){
         return allCoursesPage.getValueOfSearch();
+    }
 
+    public String getHrefLink(){
+        return allCoursesPage.getCourseHrefLinkFromPage();
     }
 
     public String getCurrentPageUrl(){
         return allCoursesPage.getCurrentUrl();
     }
-
-    public boolean getStatusPageCode(){
-       return allCoursesPage.getStatusCode();
-    }
-
 }

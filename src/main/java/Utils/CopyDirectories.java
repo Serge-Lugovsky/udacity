@@ -16,34 +16,30 @@ public class CopyDirectories {
             FileUtils.waitFor(srcDir, 5);
             FileUtils.copyDirectory(srcDir, destDir);
         } catch (IOException e) {
-//            e.printStackTrace();
             System.out.println("=====================|Failed copy|=========================");
+            e.printStackTrace();
         }
     }
 
     public static void makeAllureReport() {
         try {
-            Runtime.getRuntime().exec("mvn allure:report");
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Runtime.getRuntime().exec("mvn allure:report").waitFor();
             System.out.println("=====|Report complete|=====");
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public static void copyResultAndHistoryDirs(){
-
-        String sourceResult = "/home/serhii/Udacity/target/allure-results/";
-        String destinationResult = "/home/serhii/Udacity/src/main/resources/allure-results/";
+    public static void copyResultsDir(){
+        String sourceResult = new File("target/allure-results/").getAbsolutePath();
+        String destinationResult = new File("src/main/resources/allure-results/").getAbsolutePath();
 
         copyFiles(sourceResult, destinationResult);
+    }
 
-        String sourceHistory = "/home/serhii/Udacity/target/allure-reports/history/";
-        String destinationHistory = "/home/serhii/Udacity/src/main/resources/allure-results/history/";
+    public static void copyHistoryDir(){
+        String sourceHistory = new File("target/allure-reports/history").getAbsolutePath();
+        String destinationHistory = new File("src/main/resources/allure-results/history/").getAbsolutePath();
 
         copyFiles(sourceHistory, destinationHistory);
     }

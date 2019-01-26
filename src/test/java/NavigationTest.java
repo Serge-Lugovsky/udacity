@@ -1,9 +1,11 @@
+import Base.TestBase;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import Listeners.ScreenShotOnFailListener;
 
 @Listeners({ScreenShotOnFailListener.class})
 public class NavigationTest extends TestBase {
@@ -16,8 +18,7 @@ public class NavigationTest extends TestBase {
         app.getAttributeHelper().waitForElements();
         app.getNavigationHelper().goLinkPage("My Classroom");
         app.getAttributeHelper().waitForElements();
-        Assert.assertTrue(app.getAttributeHelper().getStatusPageCode(), "Check page status code");
-        Assert.assertEquals(app.getAttributeHelper().getCurrentPageUrl(), TestLinks.myClassroomLink);
+        Assert.assertEquals(app.getAttributeHelper().getCurrentPageUrl(), app.getAttributeHelper().getHrefLink());
     }
 
     @Test(description = "Check Blog link", groups = {"fullGroup"}, priority = 1)
@@ -28,8 +29,7 @@ public class NavigationTest extends TestBase {
         app.getAttributeHelper().waitForElements();
         app.getNavigationHelper().goLinkPage("Blog");
         app.getAttributeHelper().waitForElements();
-        Assert.assertTrue(app.getAttributeHelper().getStatusPageCode(), "Check page status code");
-        Assert.assertEquals(app.getAttributeHelper().getCurrentPageUrl(), TestLinks.blogLink);
+        Assert.assertEquals(app.getAttributeHelper().getCurrentPageUrl(), app.getAttributeHelper().getHrefLink());
     }
 
     @Test(description = "Check For Enterprise link", groups = {"fullGroup"}, priority = 2)
@@ -40,8 +40,7 @@ public class NavigationTest extends TestBase {
         app.getAttributeHelper().waitForElements();
         app.getNavigationHelper().goLinkPage("For Enterprise");
         app.getAttributeHelper().waitForElements();
-        Assert.assertTrue(app.getAttributeHelper().getStatusPageCode(), "Check page status code");
-        Assert.assertEquals(app.getAttributeHelper().getCurrentPageUrl(), TestLinks.forEnterpriseLink);
+        Assert.assertEquals(app.getAttributeHelper().getCurrentPageUrl(), app.getAttributeHelper().getHrefLink());
     }
 
 }

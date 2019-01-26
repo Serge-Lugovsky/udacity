@@ -11,14 +11,12 @@ public abstract class Page {
 
     WebDriver driver;
     WebDriverWait wait;
-    PageManager pages;
     Actions actions;
     JavascriptExecutor jse;
 
-    protected Page(PageManager pages){
-        this.pages = pages;
+    Page(PageManager pages){
         driver = pages.getDriver();
-        wait = new WebDriverWait(driver, 20);
+        wait = new WebDriverWait(driver, 10);
         actions = new Actions(driver);
         jse = (JavascriptExecutor) driver;
     }

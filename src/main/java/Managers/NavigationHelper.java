@@ -2,7 +2,7 @@ package Managers;
 
 public class NavigationHelper extends PageManager {
 
-    protected NavigationHelper(AppManager manager){
+    NavigationHelper(AppManager manager){
         super(manager.getDriver());
     }
 

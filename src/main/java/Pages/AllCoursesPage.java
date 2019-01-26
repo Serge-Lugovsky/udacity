@@ -4,12 +4,11 @@ import Managers.PageManager;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
+
+import static Utils.JsAndJqueryWaiter.waitJsAndJQueryLoad;
 
 
 public class AllCoursesPage extends Page{
@@ -20,7 +19,7 @@ public class AllCoursesPage extends Page{
     @FindBy(xpath = "//span[text()='Results']")
     private WebElement confirmSearch;
 
-    @FindBy(xpath = "//*[contains(@class, 'course-summary-card')]")
+    @FindBy(xpath = "//div[contains(@class, 'course-summary-card')]")
     private List<WebElement> coursesList;
 
     @FindBy(xpath = "//a[@data-analytics-event='Navbar Link Clicked']")
@@ -29,11 +28,7 @@ public class AllCoursesPage extends Page{
     @FindBy(xpath = "//span[@class='filters ng-star-inserted']")
     private WebElement searchFilterText;
 
-    private WebElement learnMoreButton;
-
     private WebElement firstCourseLink;
-
-    private WebElement firstCourseSubmenu;
 
     private static String textFirstCourseLink;
 
@@ -44,7 +39,7 @@ public class AllCoursesPage extends Page{
         super(pages);
     }
 
-    @Step("Search courses {0}")
+    @Step("Search courses {searchText}")
     public AllCoursesPage searchSmth(String searchText){
         actions.sendKeys(Keys.ESCAPE).build().perform();
         wait.until(ExpectedConditions.elementToBeClickable(searchField));
@@ -69,41 +64,12 @@ public class AllCoursesPage extends Page{
 
     @Step("Wait for Js and jQuery to load ")
     public void getForAllElem(){
-        try {
-            // wait for jQuery to load
-            ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
-                @Override
-                public Boolean apply(WebDriver driver) {
-                    try {
-                        return ((Long) jse.executeScript("return jQuery.active") == 0);
-                    } catch (Exception e) {
-                        // no jQuery present
-                        return true;
-                    }
-                }
-            };
-            // wait for Javascript to load
-            ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
-                @Override
-                public Boolean apply(WebDriver driver) {
-                    return jse.executeScript("return document.readyState")
-                            .toString().equals("complete");
-                }
-            };
-
-            wait.until(ExpectedConditions.and(
-                    jQueryLoad,
-                    jsLoad
-            ));
-
-        }catch (StaleElementReferenceException | TimeoutException e){
-            getForAllElem();
-        }
+        waitJsAndJQueryLoad(jse, wait);
     }
 
     @Step("Open first course submenu in list ")
     public void openFirstCourseSubMenu() {
-        firstCourseSubmenu = coursesList.get(0).findElement(By.xpath(".//span[contains(text(), 'Details')]"));
+        WebElement firstCourseSubmenu = coursesList.get(0).findElement(By.xpath(".//span[contains(text(), 'Details')]"));
         jse.executeScript("arguments[0].scrollIntoView(true);", firstCourseSubmenu);
         wait.until(ExpectedConditions.elementToBeClickable(firstCourseSubmenu));
         jse.executeScript("arguments[0].click();", firstCourseSubmenu);
@@ -111,7 +77,7 @@ public class AllCoursesPage extends Page{
 
     @Step("Check learn more button is displayed")
     public boolean findLearnMoreBtn(){
-        learnMoreButton = coursesList.get(0).findElement(By.xpath(".//a[text()= 'Learn More']"));
+        WebElement learnMoreButton = coursesList.get(0).findElement(By.xpath(".//a[text()= 'Learn More']"));
         wait.until(ExpectedConditions.visibilityOf(learnMoreButton));
         return learnMoreButton.isDisplayed();
     }
@@ -136,13 +102,14 @@ public class AllCoursesPage extends Page{
         jse.executeScript("arguments[0].click();", firstCourseLink);
     }
 
-    @Step("Go to link '{0}' ")
+    @Step("Go to link '{linkName} ")
     public void goToNavbarLinkPage(String linkName){
         if (navbarTopLinkList.size() > 0) {
             for (WebElement link : navbarTopLinkList) {
                 if (link.getText().trim().equals(linkName.trim())){
                     wait.until(ExpectedConditions.elementToBeClickable(link));
-                    hrefLink = link.getAttribute("href");
+                    hrefLink = link.getAttribute("href")
+                            .replaceAll("^(http://|https://)", "").replaceAll("/?$", "");
                     jse.executeScript("arguments[0].click();", link);
                     break;
                 }
@@ -150,22 +117,13 @@ public class AllCoursesPage extends Page{
         }
     }
 
+    public String getCourseHrefLinkFromPage() {
+        return hrefLink;
+    }
+
     @Step("Check navbar link")
     public String getCurrentUrl(){
-        return driver.getCurrentUrl();
+        return driver.getCurrentUrl().replaceAll("^(http://|https://)", "")
+                .replaceAll("/?(me)?$", "");
     }
-
-    @Step("Get page http status code")
-    public boolean getStatusCode(){
-        try {
-            HttpURLConnection.setFollowRedirects(false);
-            HttpURLConnection con = (HttpURLConnection) new URL(driver.getCurrentUrl()).openConnection();
-            con.setRequestMethod("HEAD");
-            return (con.getResponseCode() == 200);
-        }catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
 }

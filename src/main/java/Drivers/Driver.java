@@ -29,11 +29,11 @@ public class Driver {
                     optionsChrome.addArguments("--headless","--disable-gpu", "--window-size=1366,768","--ignore-certificate-errors");
                 }
                 optionsChrome.addArguments("start-maximized");
+//                optionsChrome.addArguments("--disable-cache", "--aggressive-cache-discard", "--disk-cache-size=1");
 
                 Map<String, Object> prefs = new HashMap<>();
                 prefs.put("profile.default_content_setting_values.notifications", 2);
                 optionsChrome.setExperimentalOption("prefs", prefs);
-
                 return new ChromeDriver(serviceChrome, optionsChrome);
 
             case "firefox":

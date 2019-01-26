@@ -17,7 +17,7 @@ public class AppManager {
     private Course course;
 
 
-    protected AppManager(){
+    AppManager(){
         String browserName = PropertyLoader.loadProperty("browser.name");
         String headless = PropertyLoader.loadProperty("head.less");
         String baseUrl = PropertyLoader.loadProperty("BASE_URL");

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class AccountPage extends Page {
 
-    @FindBy(xpath = "//a[@title='Logout']")
+    @FindBy(xpath = "//li/a[@title='Logout']")
     private WebElement logoutButton;
 
     @FindBy(xpath = "//a[@title='Settings']")
@@ -29,7 +29,7 @@ public class AccountPage extends Page {
     @FindBy(xpath = "//input[@placeholder='Email Address']")
     private WebElement emailField;
 
-    @FindBy(xpath = "(//*[@title='Sign In'])[2]")
+    @FindBy(xpath = "(//a[@title='Sign In'])[2]")
     private WebElement signInLink;
 
     @FindBy(xpath = "//a[@title = 'Catalog']")
@@ -81,39 +81,38 @@ public class AccountPage extends Page {
         wait.until(ExpectedConditions.elementToBeClickable(emailField));
         return emailField.getAttribute("value");
     }
+//========================================================================================================
 
-    @Step("Check login")
-    public boolean verifyLogin(){
-
-        try {
-            wait.until(ExpectedConditions.urlToBe("https://classroom.udacity.com/me"));
-
-        }catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
-            driver.get("https://classroom.udacity.com");
-            wait.until(ExpectedConditions.visibilityOf(logoutButton));
-        }
-        wait.until(ExpectedConditions.visibilityOf(logoutButton));
-        return logoutButton.isDisplayed();
-    }
-//======================================================================================================================
     @Step("Logout from account")
     public void logOutAccount() {
         driver.get("https://classroom.udacity.com/me");
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
+            jse.executeScript("arguments[0].click();", logoutButton);
+        }catch (StaleElementReferenceException e){
+            wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
+            jse.executeScript("arguments[0].click();", logoutButton);
+        }
+    }
+
+    @Step("Check login")
+    public boolean verifyLogin(){
+        try {
+            wait.until(ExpectedConditions.urlToBe("https://classroom.udacity.com/me"));
+        }catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
+            driver.get("https://classroom.udacity.com");
+        }
         wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
-        jse.executeScript("arguments[0].click();", logoutButton);
+        return logoutButton.isDisplayed();
     }
 
     @Step("Check logout")
     public boolean verifyLogOut(){
-
         try{
-
-            wait.until(ExpectedConditions.visibilityOf(signInLink));
-
+            wait.until(ExpectedConditions.elementToBeClickable(signInLink));
         }catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
-
             driver.get("https://www.udacity.com");
-            wait.until(ExpectedConditions.visibilityOf(signInLink));
+            wait.until(ExpectedConditions.elementToBeClickable(signInLink));
         }
         return signInLink.isDisplayed();
     }

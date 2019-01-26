@@ -1,3 +1,6 @@
+package Listeners;
+
+import Base.TestBase;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -7,8 +10,6 @@ import org.testng.*;
 
 public class ScreenShotOnFailListener implements ITestListener {
 
-    private WebDriver driver;
-
     @Override
     public void onTestStart(ITestResult iTestResult) {}
 
@@ -17,7 +18,7 @@ public class ScreenShotOnFailListener implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        saveScreenshot(iTestResult.getThrowable(), iTestResult);
+        saveScreenshot(iTestResult);
     }
 
     @Override
@@ -25,7 +26,7 @@ public class ScreenShotOnFailListener implements ITestListener {
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
-        saveScreenshot(iTestResult.getThrowable(), iTestResult);
+        saveScreenshot(iTestResult);
     }
 
     @Override
@@ -36,9 +37,9 @@ public class ScreenShotOnFailListener implements ITestListener {
 
     }
 
-    @Attachment(value = "Error message:   {0} " , type = "image/png", fileExtension = ".jpg")
-    public byte[] saveScreenshot(Object errorMessage, ITestResult result){
-        this.driver = ((TestBase)result.getInstance()).app.getDriver();
+    @Attachment(value = "Screenshot", type = "image/png", fileExtension = ".png")
+    private byte[] saveScreenshot(ITestResult result){
+        WebDriver driver = ((TestBase) result.getInstance()).app.getDriver();
         return (((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES));
     }
 }

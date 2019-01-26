@@ -1,9 +1,11 @@
+import Base.TestBase;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import Listeners.ScreenShotOnFailListener;
 
 @Listeners({ScreenShotOnFailListener.class})
 public class VerifyCourseInfoTest extends TestBase {
@@ -19,9 +21,11 @@ public class VerifyCourseInfoTest extends TestBase {
         app.getAttributeHelper().getFirstCourseLinkText();
         app.getNavigationHelper().goFirstCoursePage();
         Assert.assertTrue(app.getAttributeHelper().getCourseH1Text().toLowerCase().trim()
-                .contains(app.getCourse().getCourseName()));
+                .contains(app.getCourse().getCourseName()),
+                "H1 text on 'Course' page isn't contains 'Course' name.");
         Assert.assertTrue(app.getAttributeHelper().getCourseH1Text().toLowerCase().trim()
-                .contains(app.getAttributeHelper().firstCourseLinkText().toLowerCase().trim()));
+                .contains(app.getAttributeHelper().firstCourseLinkText().toLowerCase().trim()),
+                "H1 text on 'Course' page isn't contains 'Course link' text.");
     }
 
     @Test(priority = 2, description = "VERIFY COURSE LEARN MORE BUTTON", groups = {"debugGroup", "fullGroup"})
@@ -33,7 +37,7 @@ public class VerifyCourseInfoTest extends TestBase {
         app.getCourseHelper().searchCourses(app.getCourse().getCourseName());
         Assert.assertEquals(app.getAttributeHelper().getSearchResult(), app.getCourse().getCourseName());
         app.getCourseHelper().openCourseSubMenu();
-        Assert.assertTrue(app.getCourseHelper().findLearnMoreBtn());
+        Assert.assertTrue(app.getCourseHelper().findLearnMoreBtn(), "Button  'Learn more' isn't displayed.");
     }
 
 }

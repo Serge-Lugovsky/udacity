@@ -22,7 +22,7 @@ public class LoginPage extends Page {
         super(pages);
     }
 
-    @Step("Input email    {0}")
+    @Step("Input email    {email}")
     public LoginPage inputEmail(String email){
         wait.until(ExpectedConditions.elementToBeClickable(emailField));
         emailField.clear();
@@ -30,7 +30,7 @@ public class LoginPage extends Page {
         return this;
     }
 
-    @Step("Input password    {0}")
+    @Step("Input password    {password}")
     public LoginPage inputPassword(String password){
         wait.until(ExpectedConditions.elementToBeClickable(passField));
         passField.clear();

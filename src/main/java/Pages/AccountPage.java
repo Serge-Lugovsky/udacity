@@ -102,6 +102,7 @@ public class AccountPage extends Page {
 
     @Step("Check login")
     public boolean verifyLogin(){
+        wait.until(ExpectedConditions.urlToBe("https://classroom.udacity.com/me"));
         try {
             wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
         }catch (TimeoutException | StaleElementReferenceException e){
@@ -112,6 +113,7 @@ public class AccountPage extends Page {
 
     @Step("Check logout")
     public boolean verifyLogOut(){
+        wait.until(ExpectedConditions.urlToBe("https://www.udacity.com/"));
         try {
             wait.until(ExpectedConditions.elementToBeClickable(signInLink));
         }catch (TimeoutException | StaleElementReferenceException e){

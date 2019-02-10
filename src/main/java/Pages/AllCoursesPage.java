@@ -79,9 +79,9 @@ public class AllCoursesPage extends Page{
     public boolean findLearnMoreBtn(){
         WebElement learnMoreButton = coursesList.get(0).findElement(By.xpath(".//a[text()= 'Learn More']"));
         try{
-            wait.until(ExpectedConditions.visibilityOf(learnMoreButton));
-        }catch (StaleElementReferenceException | IndexOutOfBoundsException | TimeoutException e){
-            wait.until(ExpectedConditions.visibilityOf(learnMoreButton));
+            wait.until(ExpectedConditions.elementToBeClickable(learnMoreButton));
+        }catch (StaleElementReferenceException | TimeoutException e){
+            wait.until(ExpectedConditions.elementToBeClickable(learnMoreButton));
         }
         return learnMoreButton.isDisplayed();
     }

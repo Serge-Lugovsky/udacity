@@ -58,7 +58,7 @@ public class AccountPage extends Page {
         try {
             wait.until(ExpectedConditions.elementToBeClickable(catalog));
             actions.click(catalog).perform();
-        }catch (StaleElementReferenceException | TimeoutException e){
+        }catch (TimeoutException | StaleElementReferenceException e){
             wait.until(ExpectedConditions.elementToBeClickable(catalog));
             actions.click(catalog).perform();
         }
@@ -103,19 +103,19 @@ public class AccountPage extends Page {
     @Step("Check login")
     public boolean verifyLogin(){
         try {
-            wait.until(ExpectedConditions.visibilityOf(logoutButton));
-        }catch (TimeoutException | StaleElementReferenceException e) {
-            wait.until(ExpectedConditions.visibilityOf(logoutButton));
+            wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
+        }catch (TimeoutException | StaleElementReferenceException e){
+            wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
         }
         return logoutButton.isDisplayed();
     }
 
     @Step("Check logout")
     public boolean verifyLogOut(){
-        try{
-            wait.until(ExpectedConditions.visibilityOf(signInLink));
-        }catch (TimeoutException | StaleElementReferenceException e) {
-            wait.until(ExpectedConditions.visibilityOf(signInLink));
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(signInLink));
+        }catch (TimeoutException | StaleElementReferenceException e){
+            wait.until(ExpectedConditions.elementToBeClickable(signInLink));
         }
         return signInLink.isDisplayed();
     }

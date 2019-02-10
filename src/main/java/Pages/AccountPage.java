@@ -55,13 +55,8 @@ public class AccountPage extends Page {
     @Step("Go to courses catalog page")
     public void goToCatalog(){
         String oldTab = driver.getWindowHandle();
-        try {
-            wait.until(ExpectedConditions.elementToBeClickable(catalog));
-            actions.click(catalog).perform();
-        }catch (TimeoutException | StaleElementReferenceException e){
-            wait.until(ExpectedConditions.elementToBeClickable(catalog));
-            actions.click(catalog).perform();
-        }
+        wait.until(ExpectedConditions.elementToBeClickable(catalog));
+        actions.click(catalog).perform();
         ArrayList<String> tabs = new ArrayList<> (driver.getWindowHandles());
             tabs.remove(oldTab);
             driver.close();

@@ -78,11 +78,7 @@ public class AllCoursesPage extends Page{
     @Step("Check learn more button is displayed")
     public boolean findLearnMoreBtn(){
         WebElement learnMoreButton = coursesList.get(0).findElement(By.xpath(".//a[text()= 'Learn More']"));
-        try{
-            wait.until(ExpectedConditions.elementToBeClickable(learnMoreButton));
-        }catch (StaleElementReferenceException | TimeoutException e){
-            wait.until(ExpectedConditions.elementToBeClickable(learnMoreButton));
-        }
+        wait.until(ExpectedConditions.elementToBeClickable(learnMoreButton));
         return learnMoreButton.isDisplayed();
     }
 

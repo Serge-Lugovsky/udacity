@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 
 public class AccountPage extends Page {
@@ -104,10 +105,12 @@ public class AccountPage extends Page {
     public boolean verifyLogin(){
         try {
             wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
-        }catch (TimeoutException | StaleElementReferenceException e){
+        }catch (StaleElementReferenceException e){
             wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
+        }catch (NoSuchElementException e){
+            driver.navigate().refresh();
         }
-        wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
+        wait.until(ExpectedConditions.visibilityOf(logoutButton));
         return logoutButton.isDisplayed();
     }
 

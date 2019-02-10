@@ -5,16 +5,17 @@ import Managers.SingletonAppManager;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import static Utils.AllureEnvironmentWriter.environmentWriter;
-//import static Utils.CopyDirectories.*;
+import static Utils.AllureEnvironmentWriter.setAllureEnvironment;
+import static Utils.LogsWriter.writeBrowserLog;
 
+//import static Utils.CopyDirectories.*;
 
 public class TestBase{
     public AppManager app = SingletonAppManager.getInstance().manager;
 
-    @BeforeSuite(alwaysRun = true, description = "Write allure environment file.")
-    public void writeEnvironmentForAllure(){
-        environmentWriter();
+    @BeforeSuite(alwaysRun = true)
+    public void  writeAllureEnvironment(){
+        setAllureEnvironment(app.getDriver());
     }
 
     @BeforeMethod(alwaysRun = true, description = "Login")
@@ -33,6 +34,7 @@ public class TestBase{
 
     @AfterSuite(alwaysRun = true, description = "Close browser and make allure report")
     public void tearDown(){
+        writeBrowserLog(app.getDriver());
         app.getDriver().quit();
 // ==================|For local use|====================
 //        makeAllureReport();

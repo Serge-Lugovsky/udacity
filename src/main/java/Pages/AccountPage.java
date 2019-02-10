@@ -59,16 +59,8 @@ public class AccountPage extends Page {
             wait.until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(catalog)));
             actions.click(catalog).perform();
         }catch (StaleElementReferenceException | TimeoutException e){
-            System.out.println(
-                    "========================|WRONG|===========================" +
-                            "========================|WRONG|===========================" +
-                            "========================|WRONG|===========================" +
-                            "========================|WRONG|===========================" +
-                            "========================|WRONG|===========================" +
-                            "========================|WRONG|==========================="
-            );
             e.printStackTrace();
-            wait.until(ExpectedConditions.elementToBeClickable(catalog));
+            wait.until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(catalog)));
             actions.click(catalog).perform();
         }
         ArrayList<String> tabs = new ArrayList<> (driver.getWindowHandles());
@@ -104,16 +96,8 @@ public class AccountPage extends Page {
             wait.until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(logoutButton)));
             actions.click(logoutButton).perform();
         }catch (TimeoutException | StaleElementReferenceException e){
-            System.out.println(
-                    "========================|WRONG|===========================" +
-                            "========================|WRONG|===========================" +
-                            "========================|WRONG|===========================" +
-                            "========================|WRONG|===========================" +
-                            "========================|WRONG|===========================" +
-                            "========================|WRONG|==========================="
-            );
             e.printStackTrace();
-            wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
+            wait.until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(logoutButton)));
             actions.click(logoutButton).perform();
         }
     }
@@ -123,16 +107,8 @@ public class AccountPage extends Page {
         try {
             wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(logoutButton)));
         }catch (TimeoutException | StaleElementReferenceException e) {
-            System.out.println(
-                    "========================|WRONG|===========================" +
-                    "========================|WRONG|===========================" +
-                    "========================|WRONG|===========================" +
-                    "========================|WRONG|===========================" +
-                    "========================|WRONG|===========================" +
-                    "========================|WRONG|==========================="
-            );
             e.printStackTrace();
-            wait.until(ExpectedConditions.visibilityOf(logoutButton));
+            wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(logoutButton)));
         }
         return logoutButton.isDisplayed();
     }
@@ -142,16 +118,8 @@ public class AccountPage extends Page {
         try{
             wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(signInLink)));
         }catch (TimeoutException | StaleElementReferenceException e) {
-            System.out.println(
-                    "========================|WRONG|===========================" +
-                            "========================|WRONG|===========================" +
-                            "========================|WRONG|===========================" +
-                            "========================|WRONG|===========================" +
-                            "========================|WRONG|===========================" +
-                            "========================|WRONG|==========================="
-            );
             e.printStackTrace();
-            wait.until(ExpectedConditions.visibilityOf(signInLink));
+            wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(signInLink)));
         }
         return signInLink.isDisplayed();
     }

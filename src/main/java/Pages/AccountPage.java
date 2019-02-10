@@ -107,6 +107,7 @@ public class AccountPage extends Page {
         }catch (TimeoutException | StaleElementReferenceException e){
             wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
         }
+        wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
         return logoutButton.isDisplayed();
     }
 

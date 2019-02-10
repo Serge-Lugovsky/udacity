@@ -16,7 +16,7 @@ pipeline{
         ALLURE_RESULTS_DIR='target/allure-results'
         ALLURE_REPORTS_DIR='target/allure-reports'
         GIT_REPOSITORY_URL='https://github.com/Serge-Lugovsky/udacity'
-        GIT_BRANCH='dev'
+        GIT_BRANCH='dev_exp'
         BROWSER="chrome"
 
         CHROMEDRIVER_URL="wget --no-check-certificate 'https://drive.google.com/uc?authuser=0&id=1Q8a-d6AivRNCkpdr2UPEtwqtgxEYeYp6&export=download' -O chromedriver"

@@ -104,23 +104,22 @@ public class AccountPage extends Page {
     @Step("Check login")
     public boolean verifyLogin(){
         try {
-            wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
-        }catch (StaleElementReferenceException e){
-            wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
-        }catch (NoSuchElementException e){
-            driver.navigate().refresh();
+            wait.until(ExpectedConditions.urlToBe("https://classroom.udacity.com/me"));
+        }catch (TimeoutException e){
+            driver.get("https://classroom.udacity.com/");
         }
-        wait.until(ExpectedConditions.visibilityOf(logoutButton));
+        wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
         return logoutButton.isDisplayed();
     }
 
     @Step("Check logout")
     public boolean verifyLogOut(){
         try {
-            wait.until(ExpectedConditions.elementToBeClickable(signInLink));
-        }catch (TimeoutException | StaleElementReferenceException e){
-            wait.until(ExpectedConditions.elementToBeClickable(signInLink));
+            wait.until(ExpectedConditions.urlToBe("https://www.udacity.com/"));
+        }catch (TimeoutException e){
+            driver.get("https://www.udacity.com/");
         }
+        wait.until(ExpectedConditions.elementToBeClickable(signInLink));
         return signInLink.isDisplayed();
     }
 

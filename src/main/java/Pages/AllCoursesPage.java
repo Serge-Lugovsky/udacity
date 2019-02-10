@@ -89,6 +89,7 @@ public class AllCoursesPage extends Page{
                             "========================|WRONG|===========================" +
                             "========================|WRONG|==========================="
             );
+            e.printStackTrace();
             wait.until(ExpectedConditions.visibilityOf(learnMoreButton));
         }
         return learnMoreButton.isDisplayed();

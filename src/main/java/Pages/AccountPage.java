@@ -67,6 +67,7 @@ public class AccountPage extends Page {
                             "========================|WRONG|===========================" +
                             "========================|WRONG|==========================="
             );
+            e.printStackTrace();
             wait.until(ExpectedConditions.elementToBeClickable(catalog));
             actions.click(catalog).perform();
         }
@@ -111,6 +112,7 @@ public class AccountPage extends Page {
                             "========================|WRONG|===========================" +
                             "========================|WRONG|==========================="
             );
+            e.printStackTrace();
             wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
             actions.click(logoutButton).perform();
         }
@@ -129,6 +131,7 @@ public class AccountPage extends Page {
                     "========================|WRONG|===========================" +
                     "========================|WRONG|==========================="
             );
+            e.printStackTrace();
             wait.until(ExpectedConditions.visibilityOf(logoutButton));
         }
         return logoutButton.isDisplayed();
@@ -147,6 +150,7 @@ public class AccountPage extends Page {
                             "========================|WRONG|===========================" +
                             "========================|WRONG|==========================="
             );
+            e.printStackTrace();
             wait.until(ExpectedConditions.visibilityOf(signInLink));
         }
         return signInLink.isDisplayed();

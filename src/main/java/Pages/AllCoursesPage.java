@@ -79,8 +79,16 @@ public class AllCoursesPage extends Page{
     public boolean findLearnMoreBtn(){
         WebElement learnMoreButton = coursesList.get(0).findElement(By.xpath(".//a[text()= 'Learn More']"));
         try{
-            wait.until(ExpectedConditions.visibilityOf(learnMoreButton));
+            wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(learnMoreButton)));
         }catch (StaleElementReferenceException | IndexOutOfBoundsException e){
+            System.out.println(
+                    "========================|WRONG|===========================" +
+                            "========================|WRONG|===========================" +
+                            "========================|WRONG|===========================" +
+                            "========================|WRONG|===========================" +
+                            "========================|WRONG|===========================" +
+                            "========================|WRONG|==========================="
+            );
             wait.until(ExpectedConditions.visibilityOf(learnMoreButton));
         }
         return learnMoreButton.isDisplayed();

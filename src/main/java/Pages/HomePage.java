@@ -25,9 +25,9 @@ public class HomePage extends Page  {
         try{
             new WebDriverWait(driver, 2)
                     .until(ExpectedConditions.elementToBeClickable(popUp));
-            jse.executeScript("arguments[0].click();", popUp);
+            actions.click(popUp).perform();
         }catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e){
-            actions.sendKeys(Keys.ESCAPE).build().perform();
+            actions.sendKeys(Keys.ESCAPE).perform();
         }
     }
 
@@ -36,11 +36,11 @@ public class HomePage extends Page  {
         try{
             new WebDriverWait(driver, 1)
                     .until(ExpectedConditions.elementToBeClickable(signInLink));
-            jse.executeScript("arguments[0].click();", signInLink);
-        }catch (TimeoutException e){
-            new WebDriverWait(driver, 2)
+            actions.click(signInLink).perform();
+        }catch (TimeoutException | StaleElementReferenceException e){
+            new WebDriverWait(driver, 3)
                     .until(ExpectedConditions.elementToBeClickable(signInLink));
-            jse.executeScript("arguments[0].click();", signInLink);
+            actions.click(signInLink).perform();
         }
     }
 

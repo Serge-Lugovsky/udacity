@@ -7,9 +7,14 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.GeckoDriverService;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.CapabilityType;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 
 public class Driver {
@@ -25,11 +30,17 @@ public class Driver {
                         .build();
                 ChromeOptions optionsChrome = new ChromeOptions();
 
+                optionsChrome.addArguments("start-maximized", "disable-infobars");
+
                 if (headless.equals("--headless")){
                     optionsChrome.addArguments("--headless","--disable-gpu", "--window-size=1366,768","--ignore-certificate-errors");
                 }
-                optionsChrome.addArguments("start-maximized");
-//                optionsChrome.addArguments("--disable-cache", "--aggressive-cache-discard", "--disk-cache-size=1");
+
+                LoggingPreferences logPrefs = new LoggingPreferences();
+                logPrefs.enable(LogType.BROWSER, Level.ALL);
+                logPrefs.enable(LogType.DRIVER, Level.ALL);
+                logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
+                optionsChrome.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
 
                 Map<String, Object> prefs = new HashMap<>();
                 prefs.put("profile.default_content_setting_values.notifications", 2);

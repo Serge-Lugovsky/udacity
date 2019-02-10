@@ -41,7 +41,7 @@ public class AllCoursesPage extends Page{
 
     @Step("Search courses {searchText}")
     public AllCoursesPage searchSmth(String searchText){
-        actions.sendKeys(Keys.ESCAPE).build().perform();
+        actions.sendKeys(Keys.ESCAPE).perform();
         wait.until(ExpectedConditions.elementToBeClickable(searchField));
         searchField.clear();
         searchField.sendKeys(searchText);
@@ -72,13 +72,13 @@ public class AllCoursesPage extends Page{
         WebElement firstCourseSubmenu = coursesList.get(0).findElement(By.xpath(".//span[contains(text(), 'Details')]"));
         jse.executeScript("arguments[0].scrollIntoView(true);", firstCourseSubmenu);
         wait.until(ExpectedConditions.elementToBeClickable(firstCourseSubmenu));
-        jse.executeScript("arguments[0].click();", firstCourseSubmenu);
+        actions.click(firstCourseSubmenu).perform();
     }
 
     @Step("Check learn more button is displayed")
     public boolean findLearnMoreBtn(){
         WebElement learnMoreButton = coursesList.get(0).findElement(By.xpath(".//a[text()= 'Learn More']"));
-        wait.until(ExpectedConditions.visibilityOf(learnMoreButton));
+        wait.until(ExpectedConditions.elementToBeClickable(learnMoreButton));
         return learnMoreButton.isDisplayed();
     }
 
@@ -99,7 +99,7 @@ public class AllCoursesPage extends Page{
         firstCourseLink = coursesList.get(0).findElement(By.xpath(".//h3/a"));
         jse.executeScript("arguments[0].scrollIntoView(true);", firstCourseLink);
         wait.until(ExpectedConditions.elementToBeClickable(firstCourseLink));
-        jse.executeScript("arguments[0].click();", firstCourseLink);
+        actions.click(firstCourseLink).perform();
     }
 
     @Step("Go to link '{linkName} ")
@@ -110,7 +110,7 @@ public class AllCoursesPage extends Page{
                     wait.until(ExpectedConditions.elementToBeClickable(link));
                     hrefLink = link.getAttribute("href")
                             .replaceAll("^(http://|https://)", "").replaceAll("/?$", "");
-                    jse.executeScript("arguments[0].click();", link);
+                    actions.click(link).perform();
                     break;
                 }
             }

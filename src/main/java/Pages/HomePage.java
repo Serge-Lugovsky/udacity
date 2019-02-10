@@ -38,7 +38,9 @@ public class HomePage extends Page  {
                     .until(ExpectedConditions.elementToBeClickable(signInLink));
             actions.click(signInLink).perform();
         }catch (TimeoutException | StaleElementReferenceException e){
-            goToLoginPage();
+            new WebDriverWait(driver, 3)
+                    .until(ExpectedConditions.elementToBeClickable(signInLink));
+            actions.click(signInLink).perform();
         }
     }
 

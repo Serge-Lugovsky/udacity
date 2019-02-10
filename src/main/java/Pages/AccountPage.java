@@ -56,11 +56,10 @@ public class AccountPage extends Page {
     public void goToCatalog(){
         String oldTab = driver.getWindowHandle();
         try {
-            wait.until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(catalog)));
+            wait.until(ExpectedConditions.elementToBeClickable(catalog));
             actions.click(catalog).perform();
         }catch (StaleElementReferenceException | TimeoutException e){
-            e.printStackTrace();
-            wait.until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(catalog)));
+            wait.until(ExpectedConditions.elementToBeClickable(catalog));
             actions.click(catalog).perform();
         }
         ArrayList<String> tabs = new ArrayList<> (driver.getWindowHandles());
@@ -93,11 +92,10 @@ public class AccountPage extends Page {
     public void logOutAccount() {
         driver.get("https://classroom.udacity.com/me");
         try {
-            wait.until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(logoutButton)));
+            wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
             actions.click(logoutButton).perform();
         }catch (TimeoutException | StaleElementReferenceException e){
-            e.printStackTrace();
-            wait.until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(logoutButton)));
+            wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
             actions.click(logoutButton).perform();
         }
     }
@@ -105,10 +103,9 @@ public class AccountPage extends Page {
     @Step("Check login")
     public boolean verifyLogin(){
         try {
-            wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(logoutButton)));
+            wait.until(ExpectedConditions.visibilityOf(logoutButton));
         }catch (TimeoutException | StaleElementReferenceException e) {
-            e.printStackTrace();
-            wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(logoutButton)));
+            wait.until(ExpectedConditions.visibilityOf(logoutButton));
         }
         return logoutButton.isDisplayed();
     }
@@ -116,10 +113,9 @@ public class AccountPage extends Page {
     @Step("Check logout")
     public boolean verifyLogOut(){
         try{
-            wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(signInLink)));
+            wait.until(ExpectedConditions.visibilityOf(signInLink));
         }catch (TimeoutException | StaleElementReferenceException e) {
-            e.printStackTrace();
-            wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(signInLink)));
+            wait.until(ExpectedConditions.visibilityOf(signInLink));
         }
         return signInLink.isDisplayed();
     }

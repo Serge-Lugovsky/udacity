@@ -12,6 +12,10 @@ public class UserHelper extends PageManager {
         homePage.popUpClose();
     }
 
+    public void closeTopAndBottomBaners(){
+        homePage.closeBanners();
+    }
+
     public void loginAs(User user){
         loginPage
                 .inputEmail(user.getEmail())

@@ -70,7 +70,7 @@ public class AllCoursesPage extends Page{
     @Step("Open first course submenu in list ")
     public void openFirstCourseSubMenu() {
         WebElement firstCourseSubmenu = coursesList.get(0).findElement(By.xpath(".//span[contains(text(), 'Details')]"));
-        jse.executeScript("arguments[0].scrollIntoView(true);", firstCourseSubmenu);
+        jse.executeScript("arguments[0].scrollIntoView(false); window.scrollBy(0, 240)", firstCourseSubmenu);
         wait.until(ExpectedConditions.elementToBeClickable(firstCourseSubmenu));
         actions.click(firstCourseSubmenu).perform();
     }
@@ -78,14 +78,18 @@ public class AllCoursesPage extends Page{
     @Step("Check learn more button is displayed")
     public boolean findLearnMoreBtn(){
         WebElement learnMoreButton = coursesList.get(0).findElement(By.xpath(".//a[text()= 'Learn More']"));
-        wait.until(ExpectedConditions.elementToBeClickable(learnMoreButton));
+        try{
+            wait.until(ExpectedConditions.elementToBeClickable(learnMoreButton));
+        }catch (StaleElementReferenceException | TimeoutException e){
+            wait.until(ExpectedConditions.elementToBeClickable(learnMoreButton));
+        }
         return learnMoreButton.isDisplayed();
     }
 
     @Step("Save course link text")
     public void saveCourseLinkText(){
         firstCourseLink = coursesList.get(0).findElement(By.xpath(".//h3/a"));
-        wait.until(ExpectedConditions.visibilityOf(firstCourseLink));
+        wait.until(ExpectedConditions.elementToBeClickable(firstCourseLink));
         textFirstCourseLink = firstCourseLink.getText();
     }
 
@@ -97,7 +101,7 @@ public class AllCoursesPage extends Page{
     @Step("Open first course page")
     public void goFirstCourseLink(){
         firstCourseLink = coursesList.get(0).findElement(By.xpath(".//h3/a"));
-        jse.executeScript("arguments[0].scrollIntoView(true);", firstCourseLink);
+        jse.executeScript("arguments[0].scrollIntoView(false); window.scrollBy(0, 240);", firstCourseLink);
         wait.until(ExpectedConditions.elementToBeClickable(firstCourseLink));
         actions.click(firstCourseLink).perform();
     }

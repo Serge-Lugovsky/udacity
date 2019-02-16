@@ -21,7 +21,7 @@ pipeline{
 
         CHROMEDRIVER_URL="wget --no-check-certificate 'https://drive.google.com/uc?authuser=0&id=1Q8a-d6AivRNCkpdr2UPEtwqtgxEYeYp6&export=download' -O chromedriver"
         GECKODRIVER_URL="wget --no-check-certificate 'https://drive.google.com/uc?authuser=0&id=1MIcIAJ5xCI-9-I5VuzEUSvx9iMrhFpdo&export=download' -O geckodriver"
-        APP_PROPERTIES="wget --no-check-certificate 'https://drive.google.com/uc?authuser=0&id=1cvntvXg5aJ7Gdxlx_soMoMYvnHWaNRhW&export=download' -O app.properties"
+        APP_PROPERTIES="wget --no-check-certificate 'https://drive.google.com/uc?authuser=0&id=1_PwUtusEFDykw-u4SIVMHAzApDBSZAO1&export=download' -O app.properties"
         ALLURE_PROPERTIES="wget --no-check-certificate 'https://drive.google.com/uc?authuser=0&id=1BfaN7O9DRbxUfyBRUiwmHkwEMcXhDrwu&export=download' -O allure.properties"
     }
 

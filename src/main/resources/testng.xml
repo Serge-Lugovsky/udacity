@@ -17,4 +17,9 @@
             <class name="NavigationTest"/>
         </classes>
     </test>
+    <test name="Github create-delete test">
+        <classes>
+            <class name="GithubCreateDeleteRepositoryTest"/>
+        </classes>
+    </test>
 </suite>

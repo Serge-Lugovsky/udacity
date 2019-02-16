@@ -3,7 +3,10 @@ package Base;
 import Managers.AppManager;
 import Managers.SingletonAppManager;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 
 import static Utils.AllureEnvironmentWriter.setAllureEnvironment;
 import static Utils.LogsWriter.writeBrowserLog;
@@ -21,6 +24,7 @@ public class TestBase{
     @BeforeMethod(alwaysRun = true, description = "Login")
     public void login(){
         app.getUserHelper().popUpClose();
+        app.getUserHelper().closeTopAndBottomBaners();
         app.getNavigationHelper().goLoginPage();
         app.getUserHelper().loginAs(app.getUser());
         Assert.assertTrue(app.getUserHelper().verifyAuth());

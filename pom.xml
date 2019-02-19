@@ -13,8 +13,8 @@
         <aspectj.version>1.9.2</aspectj.version>
         <maven-surefire-plugin-version>3.0.0-M3</maven-surefire-plugin-version>
         <maven-compiler-plugin-version>3.8.0</maven-compiler-plugin-version>
-        <allure-testng-version>2.9.0</allure-testng-version>
-        <allure-report-version>2.9.0</allure-report-version>
+        <allure-testng-version>2.10.0</allure-testng-version>
+        <allure-report-version>2.10.0</allure-report-version>
         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
     </properties>
 
@@ -124,11 +124,11 @@
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
-                <version>2.9</version>
+                <version>2.10.0</version>
                 <configuration>
                     <reportVersion>${allure-report-version}</reportVersion>
                     <propertiesFilePath>${project.basedir}/src/main/resources/allure.properties</propertiesFilePath>
-                    <allureDownloadUrl>https://dl.bintray.com/qameta/maven/io/qameta/allure/allure-commandline/2.9.0/allure-commandline-2.9.0.zip</allureDownloadUrl>
+                    <allureDownloadUrl>https://dl.bintray.com/qameta/maven/io/qameta/allure/allure-commandline/2.10.0/allure-commandline-2.10.0.zip</allureDownloadUrl>
                     <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
                     <reportDirectory>${project.build.directory}/allure-reports</reportDirectory>
                 </configuration>

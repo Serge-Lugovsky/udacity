@@ -15,7 +15,7 @@ public class GithubCreateDeleteRepositoryTest extends MyActivity {
     @Description("Create repository on github.")
     public void createRepository(){
         createRepo(repo);
-        Assert.assertEquals(getRepo(repo).getName(), getSavedRepo().getName(), "Failed create repository");
+        Assert.assertTrue(getListRepo().contains(repo.getName()),"Failed create repository");
     }
 
     @Test(description = "Delete repositoty", dependsOnGroups = {"createRepoGroup"} )
@@ -23,6 +23,6 @@ public class GithubCreateDeleteRepositoryTest extends MyActivity {
     @Description("Delete repository on github.")
     public void deleteRepository(){
         destroyRepo(repo);
-        Assert.assertTrue(verifyDeleteRepo(repo), "Failed delete repository");
+        Assert.assertFalse(getListRepo().contains(repo.getName()), "Failed delete repository");
     }
 }

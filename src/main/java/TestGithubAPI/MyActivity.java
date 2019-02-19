@@ -7,33 +7,29 @@ import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MyActivity {
     private String userName = PropertyLoader.loadProperty("GIT_HUB_USER_NAME");
     private String password = PropertyLoader.loadProperty("GIT_HUB_PASSWORD");
     private GithubClientAPI loginService = RetrofitService.createService(GithubClientAPI.class, userName, password);
-    private static GitHubRepositoryModel savedRepo;
-
-    protected GitHubRepositoryModel getSavedRepo(){
-        return savedRepo;
-    }
 
     @Step("Get repository {repo.name}")
     protected GitHubRepositoryModel getRepo(GitHubRepositoryModel repo){
         Response<GitHubRepositoryModel> getRepoCall = null;
-
         try {
             getRepoCall = loginService.getRepository(userName, repo.getName()).execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        getResponceStatus(getRepoCall);
-        return getRepoCall.body();
-    }
 
-    @Step("Check repository {repo.name} is deleted?")
-    protected boolean verifyDeleteRepo(GitHubRepositoryModel repo){
-        return getRepo(repo) == null;
+        getResponceStatus(getRepoCall);
+
+        if (getRepoCall.isSuccessful()){
+            return getRepoCall.body();
+        }
+
+        return null;
     }
 
     @Step("Create repository {repo.name}")
@@ -44,22 +40,40 @@ public class MyActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         getResponceStatus(createRepoCall);
-        savedRepo = createRepoCall.body();
+
+        if (createRepoCall.isSuccessful()){
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @Step("Get list of all repositories")
-    protected void getListRepo(){
-        Response<List<GitHubRepositoryModel>> repositoriesListCall = null;
+    protected List<String> getListRepo(){
+        Response <List<GitHubRepositoryModel>> getRepoListCall = null;
+        List<String> allRepos;
         try {
-            repositoriesListCall = loginService.getListRepositories(userName).execute();
-            if (repositoriesListCall.body() != null) {
-                repositoriesListCall.body().forEach(change -> System.out.println(change.getName()+" "+change.getId()));
-            }
+            getRepoListCall = loginService.getListRepositories().execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        getResponceStatus(repositoriesListCall);
+
+        getResponceStatus(getRepoListCall);
+
+        if (getRepoListCall.isSuccessful()){
+            allRepos = getRepoListCall.body().stream()
+                                .map(GitHubRepositoryModel::getName)
+                                .collect(Collectors.toList());
+            System.out.println(allRepos);
+            return allRepos;
+        }
+
+        return null;
     }
 
     @Step("Delete repository {repo.name}")
@@ -72,6 +86,15 @@ public class MyActivity {
         }
 
         getResponceStatus(deleteRepoCall);
+
+        if (deleteRepoCall.isSuccessful()){
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @Attachment(value = "Response data :", type = "application/json", fileExtension = ".yml")

@@ -8,10 +8,8 @@ import java.util.List;
 
 public interface GithubClientAPI {
 
-    @GET("users/{user}/repos")
-    Call<List<GitHubRepositoryModel>> getListRepositories(
-            @Path("user") String user
-    );
+    @GET("user/repos")
+    Call<List<GitHubRepositoryModel>> getListRepositories();
 
     @POST("user/repos")
     Call<GitHubRepositoryModel> createRepository(
